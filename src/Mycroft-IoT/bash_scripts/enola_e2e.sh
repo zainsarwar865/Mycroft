@@ -1,8 +1,8 @@
 #!/bin/bash
 
-dat_path=/Users//Desktop/Github-Projects/Private-Data-Sharing-new/IOT-data/IoT-CVS/
-code_dir=/Users//Desktop/Github-Projects/Private-Data-Sharing-rewrite-code/src/Enola/scripts
-results_path=/Users//Desktop/Github-Projects/Private-Data-Sharing-new/results/
+dat_path=/home/Projects/Data_Sharing/Private-Data-Sharing/src/IOT-data/IoT-CVS/
+code_dir=/home/Projects/Data_Sharing/Private-Data-Sharing/src/Mycroft-IoT/scripts
+results_path=/home/Projects/Data_Sharing/Private-Data-Sharing/results/
 # echo $dat_path
 ########    setting up  ###############
 SET_UP_DATA=false # split into benign and attack data and create train, validation and test set
@@ -20,9 +20,9 @@ search_mode=pairwise #all   # pairwise is for sharing between 1 MT and 1 DO, #al
 binning_mode=dharddo # do , dharddo use information from both dhard and do to generate bins, do only use information from do to generate bins
 MT="1Part"
 DO=CnC_3
-sharing_mode=full #others include  nosharing, enola, equ_enola, enola-sample_10, enola-sample_20, enola-sample-50, enola-sample_100, enola-sample_200, enola-sample_500, random-sample_10, random-sample_20, random-sample_100, random-sample_200, random-sample_500
+sharing_mode=full #others include  nosharing, mycroft, equ_mycroft, mycroft-sample_10, mycroft-sample_20, mycroft-sample-50, mycroft-sample_100, mycroft-sample_200, mycroft-sample_500, random-sample_10, random-sample_20, random-sample_100, random-sample_200, random-sample_500
 diverse_mode=binning #decisiontree # none
-diverse_num=5 # number of samples from the diverse dataset (not selected by enola to be shared in addition to data shared by enola)
+diverse_num=5 # number of samples from the diverse dataset (not selected by mycroft to be shared in addition to data shared by mycroft)
 model_name=DecisionTree
 
 
@@ -78,7 +78,7 @@ fi
 if [ "$CALCULATE_BINNING" = true ]
 
 then
-    cd ${code_dir}/enola
+    cd ${code_dir}/mycroft
     echo "$PWD"
     python3 calculate_binning_distance.py \
     --save_path=${dat_path}Binning \
@@ -101,7 +101,7 @@ fi
 if [ "$RUN_DECISIONTREE_DHARD_DO" = true ]
 
 then
-    cd ${code_dir}/enola
+    cd ${code_dir}/mycroft
     echo "$PWD"
     python3 run_decisiontree_DO_dhard.py \
     --save_path=${dat_path}DecisionTree \
@@ -118,12 +118,12 @@ fi
 
 
 
-# # # creating the divserse samples besides enola data
+# # # creating the divserse samples besides mycroft data
 # # #############################################################################################  
 if [ "$DIVERSE_SHARE" = true ]
 
 then
-    cd ${code_dir}/enola
+    cd ${code_dir}/mycroft
     echo "$PWD"
     python3 diversify_share_data.py \
     --save_path=${results_path} \
